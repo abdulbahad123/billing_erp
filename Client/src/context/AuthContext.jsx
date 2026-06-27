@@ -3,7 +3,7 @@ import axios from "axios";
 
 const AuthContext = createContext(null);
 
-const BACKEND_URL = "http://localhost:5000";
+const BACKEND_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 // Axios custom instance
 export const api = axios.create({
