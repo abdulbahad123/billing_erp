@@ -8,7 +8,7 @@ const {
     getProfile,
 } = require("../controllers/authController");
 
-const protect = require("../middleware/authMiddleware");
+const protect = require("../middleware/authmiddleware");
 const authorize = require("../middleware/roleMiddleware");
 
 // Public Route
