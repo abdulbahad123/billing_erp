@@ -9,6 +9,7 @@ import {
     FiSettings,
     FiLogOut,
 } from "react-icons/fi";
+import logo from "../assets/logo.png";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
     const { user, logout, t } = useAuth();
@@ -73,13 +74,14 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 }`}
             >
                 {/* Logo Area */}
-                <div className="flex items-center justify-between h-20 px-6 border-b border-slate-850">
+                <div className="flex items-center gap-3 px-6 h-20 border-b border-slate-850">
+                    <img src={logo} alt="Logo" className="h-14 w-auto object-contain" />
                     <div className="flex flex-col text-left">
-                        <span className="text-xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">
-                            ERP BILLING
+                        <span className="text-sm font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">
+                            ANGALA MOTOR
                         </span>
-                        <span className="text-xs text-slate-500 font-mono tracking-widest uppercase">
-                            Enterprise
+                        <span className="text-[9px] text-slate-500 font-mono tracking-widest uppercase">
+                            V Power
                         </span>
                     </div>
                     <button

@@ -4,6 +4,7 @@ import Loader from "../components/Loader";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { FiSearch, FiPrinter, FiShare2, FiEye, FiX } from "react-icons/fi";
+import logo from "../assets/logo.png";
 
 const Invoices = () => {
     const { api, language, t } = useAuth();
@@ -207,16 +208,25 @@ const Invoices = () => {
                         {/* Screen Bill View */}
                         <div className="space-y-6 text-left text-slate-350">
                             {/* Shop Title Info */}
-                            <div className="text-center p-4 rounded-xl bg-slate-900/40 border border-slate-800">
-                                <h2 className="text-xl font-bold text-slate-100">
-                                    ஸ்ரீ அங்காள பரமேஸ்வரி மோட்டார்ஸ்
-                                </h2>
-                                <p className="text-xs text-slate-500 mt-1">
-                                    ஸ்ரீ அங்காளபரமேஸ்வரி காம்ப்ளக்ஸ், விராலிமலை-இலுப்பூர் மெயின்ரோடு, மேலப்பட்டி.
-                                </p>
-                                <p className="text-xs text-slate-400 mt-1">
-                                    Cell: 86681 85758, 87600 76551
-                                </p>
+                            <div className="text-center p-4 rounded-xl bg-slate-900/40 border border-slate-800 space-y-2">
+                                <div className="text-center font-bold text-sm text-purple-400">உ</div>
+                                <div className="text-center font-semibold text-xs text-slate-300">
+                                    ஸ்ரீ ஆகாச கருப்பர் துணை ஸ்ரீ மதுரை வீரன் துணை ஸ்ரீ பட்டவன் துணை
+                                </div>
+                                <div className="flex items-center justify-center gap-4 pt-1">
+                                    <img src={logo} alt="Logo" className="h-16 object-contain" />
+                                    <div className="text-center">
+                                        <h2 className="text-xl font-bold text-slate-100">
+                                            ஸ்ரீ அங்காள பரமேஸ்வரி மோட்டார்ஸ்
+                                        </h2>
+                                        <p className="text-xs text-slate-500 mt-1">
+                                            ஸ்ரீ அங்காளபரமேஸ்வரி காம்ப்ளக்ஸ், விராலிமலை-இலுப்பூர் மெயின்ரோடு, மேலப்பட்டி.
+                                        </p>
+                                        <p className="text-xs text-slate-400 mt-0.5">
+                                            Cell: 86681 85758, 87600 76551
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
 
                             {/* Client & Metadata */}
@@ -327,137 +337,117 @@ const Invoices = () => {
 
             {/* HIDDEN PRINT-ONLY INVOICE COMPONENT matching the physical invoice layout pixel-by-pixel */}
             {selectedInvoice && (
-                <div className="print-invoice-only font-mono text-black">
-                    {/* Blessings top line */}
-                    <div className="flex justify-between text-[11px] font-bold border-b border-black pb-1 mb-2">
-                        <span>எண் : {selectedInvoice.invoiceNumber}</span>
-                        <div className="text-center">
-                            <span className="text-[9px] block">உ</span>
-                            <span>ஸ்ரீ ஆகாச கருப்பர் துணை • ஸ்ரீ மதுரை வீரன் துணை • ஸ்ரீ பட்டவன் துணை</span>
+                <div className="print-invoice-only print-bill-container">
+                    <div className="bill-border-wrapper">
+                        {/* Top Header Row - Auspicious Deities */}
+                        <div className="bill-header-top-row">
+                            <div className="text-center font-bold text-base">உ</div>
+                            <div className="text-center font-semibold text-xs mt-0.5">
+                                ஸ்ரீ ஆகாச கருப்பர் துணை ஸ்ரீ மதுரை வீரன் துணை ஸ்ரீ பட்டவன் துணை
+                            </div>
                         </div>
-                        <span className="text-right">
-                            Cell: 86681 85758<br/>87600 76551
-                        </span>
-                    </div>
 
-                    {/* Store Title */}
-                    <div className="text-center mt-2">
-                        <h1 className="text-3xl font-extrabold text-black tracking-wider leading-none m-0">
-                            ஸ்ரீ அங்காள பரமேஸ்வரி மோட்டார்ஸ்
-                        </h1>
-                        <p className="text-sm font-bold border-b border-black pb-2 mt-1">
-                            ஸ்ரீ அங்காளபரமேஸ்வரி காம்ப்ளக்ஸ், விராலிமலை-இலுப்பூர் மெயின்ரோடு - மேலப்பட்டி.
-                        </p>
-                    </div>
-
-                    {/* Date and Client Info */}
-                    <div className="flex justify-between my-3 text-sm">
-                        <div className="flex-1">
-                            <span className="font-bold">பெறுதல் (To):</span>{" "}
-                            <span className="border-b border-dotted border-black inline-block min-w-[280px] px-2 font-bold">
-                                {selectedInvoice.customerName} ({selectedInvoice.customerPhone})
-                            </span>
+                        {/* Company Info Block (Logo + Name + Address + GSTIN) */}
+                        <div className="bill-company-section">
+                            <div className="company-logo-name-row">
+                                <img src={logo} alt="Logo" className="company-logo" />
+                                <div className="company-name-text">
+                                    <div className="company-name-line1">Sri Angala parameshwari Motors</div>
+                                    <div className="company-name-line2">&</div>
+                                    <div className="company-name-line3">V Power Electrician</div>
+                                </div>
+                            </div>
+                            <div className="company-address">
+                                ஸ்ரீ அங்காளபரமேஸ்வரி காம்ப்ளக்ஸ், விராலிமலை-இலுப்பூர் மெயின்ரோடு, மேலப்பட்டி - 621312.
+                            </div>
+                            <div className="company-gstin-pan">
+                                GSTIN - 33AAAFS2812D1ZH | PAN - AAAFS2812D
+                            </div>
                         </div>
-                        <div className="text-right">
-                            <span className="font-bold">தேதி (Date):</span>{" "}
-                            <span className="border-b border-dotted border-black inline-block min-w-[100px] px-2 font-mono">
-                                {new Date(selectedInvoice.createdAt).toLocaleDateString("en-IN")}
-                            </span>
+
+                        {/* Billing & Invoice Details Block (2-column layout) */}
+                        <div className="bill-details-section">
+                            <div className="billing-details-left">
+                                <div className="details-title">Billing Details</div>
+                                <div className="details-row">
+                                    <span className="details-label">Customer Name</span>
+                                    <span className="details-value">: {selectedInvoice.customerName}</span>
+                                </div>
+                                <div className="details-row">
+                                    <span className="details-label">Address</span>
+                                    <span className="details-value">: {selectedInvoice.customerPhone}, Melapatti</span>
+                                </div>
+                            </div>
+
+                            <div className="invoice-details-right">
+                                <div className="details-row">
+                                    <span className="details-label">Invoice Number</span>
+                                    <span className="details-value">: {selectedInvoice.invoiceNumber}</span>
+                                </div>
+                                <div className="details-row">
+                                    <span className="details-label">Invoice Date</span>
+                                    <span className="details-value">
+                                        : {new Date(selectedInvoice.createdAt).toLocaleDateString("en-IN", {
+                                            day: "2-digit",
+                                            month: "short",
+                                            year: "numeric",
+                                        })}
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Receipt Items Grid Table with split Rs/Ps columns */}
-                    <table className="print-table w-full border border-black text-sm">
-                        <thead>
-                            <tr className="border-b border-black bg-gray-150">
-                                <th className="border-r border-black py-1 text-center w-10">S.No</th>
-                                <th className="border-r border-black py-1 px-2 text-left">PARTICULARS</th>
-                                <th className="border-r border-black py-1 text-center w-36">Qty</th>
-                                <th colSpan="2" className="py-1 text-center w-32 px-2">
-                                    <div className="border-b border-black pb-0.5">AMOUNT</div>
-                                    <div className="flex justify-between text-[11px] pt-0.5">
-                                        <span className="w-1/2 text-left pl-2">Rs.</span>
-                                        <span className="w-1/2 text-right pr-2">Ps.</span>
-                                    </div>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {selectedInvoice.items.map((item, index) => {
-                                // Split amount into Rupees (Integer) and Paise (Decimals)
-                                const amtStr = String(item.amount);
-                                const parts = amtStr.split(".");
-                                const rupees = parts[0];
-                                const paise = parts[1] ? parts[1].padEnd(2, "0").slice(0, 2) : "00";
-
-                                return (
-                                    <tr key={index} className="border-b border-black h-7">
-                                        <td className="border-r border-black py-1.5 text-center font-bold">{index + 1}</td>
-                                        <td className="border-r border-black py-1.5 px-2 text-left font-bold uppercase">
-                                            {item.name}
-                                        </td>
-                                        <td className="border-r border-black py-1.5 text-center font-bold">
-                                            {item.formula ? item.formula : `${item.qty} ${item.unit}`}
-                                        </td>
-                                        <td className="border-r border-black py-1.5 text-right px-2 font-bold font-mono w-20">
-                                            {rupees}
-                                        </td>
-                                        <td className="py-1.5 text-right px-2 font-bold font-mono w-12 text-gray-700">
-                                            {paise}
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                            
-                            {/* Empty filler rows to match physical receipt paper length */}
-                            {selectedInvoice.items.length < 10 &&
-                                Array.from({ length: 10 - selectedInvoice.items.length }).map((_, idx) => (
-                                    <tr key={`empty-${idx}`} className="border-b border-black h-7">
-                                        <td className="border-r border-black"></td>
-                                        <td className="border-r border-black"></td>
-                                        <td className="border-r border-black"></td>
-                                        <td className="border-r border-black"></td>
-                                        <td></td>
+                        {/* Items Table */}
+                        <table className="bill-items-table">
+                            <thead>
+                                <tr>
+                                    <th className="col-sr">Sr.</th>
+                                    <th className="col-desc">Item Description</th>
+                                    <th className="col-hsn">HSN/SAC</th>
+                                    <th className="col-qty">Qty</th>
+                                    <th className="col-unit">Unit</th>
+                                    <th className="col-price">List Price</th>
+                                    <th className="col-disc">Disc.</th>
+                                    <th className="col-tax">Tax %</th>
+                                    <th className="col-amount">Amount (₹)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {selectedInvoice.items.map((item, index) => (
+                                    <tr key={index}>
+                                        <td className="text-center">{index + 1}</td>
+                                        <td className="text-left font-bold uppercase">{item.name}</td>
+                                        <td className="text-center">{item.hsn || ""}</td>
+                                        <td className="text-center">{Number(item.qty).toFixed(2)}</td>
+                                        <td className="text-center">{item.unit || "Pcs."}</td>
+                                        <td className="text-right">{Number(item.salesPrice).toFixed(2)}</td>
+                                        <td className="text-center">{item.discount || ""}</td>
+                                        <td className="text-center">{item.tax || ""}</td>
+                                        <td className="text-right font-bold">{Number(item.amount).toFixed(2)}</td>
                                     </tr>
                                 ))}
-
-                            {/* Discount row */}
-                            {selectedInvoice.discount > 0 && (
-                                <tr className="border-b border-black font-bold">
-                                    <td colSpan="3" className="border-r border-black py-1.5 text-right px-2">
-                                        TALLUPADI (Discount):
-                                    </td>
-                                    <td className="border-r border-black py-1.5 text-right px-2 font-mono">
-                                        -{selectedInvoice.discount}
-                                    </td>
-                                    <td className="py-1.5 text-right px-2 font-mono">00</td>
+                                {/* Fill empty rows to make the table look complete like the reference image */}
+                                {selectedInvoice.items.length < 16 &&
+                                    Array.from({ length: 16 - selectedInvoice.items.length }).map((_, idx) => (
+                                        <tr key={`empty-${idx}`} className="empty-row">
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                    ))}
+                                {/* Total Row */}
+                                <tr className="total-row">
+                                    <td colSpan="8" className="text-right font-bold">Total</td>
+                                    <td className="text-right font-bold">{Number(selectedInvoice.total).toFixed(2)}</td>
                                 </tr>
-                            )}
-
-                            {/* Total Row */}
-                            <tr className="font-bold border-t-2 border-black">
-                                <td colSpan="3" className="border-r border-black py-2 text-right px-2 uppercase font-extrabold text-md">
-                                    TOTAL AMOUNT:
-                                </td>
-                                <td className="border-r border-black py-2 text-right px-2 text-md font-extrabold font-mono">
-                                    {String(selectedInvoice.total).split(".")[0]}
-                                </td>
-                                <td className="py-2 text-right px-2 text-md font-extrabold font-mono">
-                                    {String(selectedInvoice.total).split(".")[1] ? String(selectedInvoice.total).split(".")[1].padEnd(2, "0").slice(0, 2) : "00"}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    {/* Rubber Seal stamp box */}
-                    <div className="flex justify-between items-center mt-6">
-                        <div className="border-2 border-black px-4 py-2 text-center rounded font-bold text-xs uppercase leading-tight scale-90 origin-left">
-                            <p>ஸ்ரீ அங்காள பரமேஸ்வரி மோட்டார்ஸ்</p>
-                            <p className="text-[10px] mt-0.5">மேலப்பட்டி</p>
-                        </div>
-                        <div className="text-right pr-6 font-bold text-xs">
-                            <p className="mt-8 border-t border-black pt-1 w-32 text-center">கையெழுத்து (Signature)</p>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             )}

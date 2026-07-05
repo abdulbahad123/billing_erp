@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import Loader from "../components/Loader";
 import {
-    FiDollarSign,
     FiTrendingUp,
     FiPackage,
     FiFileText,
@@ -172,7 +171,7 @@ const Dashboard = () => {
                         </h3>
                     </div>
                     <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/25 flex items-center justify-center text-purple-400">
-                        <FiDollarSign className="text-2xl" />
+                        <span className="text-2xl font-extrabold select-none">₹</span>
                     </div>
                 </div>
 

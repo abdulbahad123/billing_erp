@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { FiLock, FiMail } from "react-icons/fi";
+import logo from "../assets/logo.png";
 
 const Login = () => {
     const { login, error } = useAuth();
@@ -36,9 +37,7 @@ const Login = () => {
 
             <div className="w-full max-w-md p-8 glass-card rounded-2xl relative z-10 border border-white/5 shadow-2xl">
                 <div className="text-center mb-8">
-                    <span className="text-xs tracking-widest font-mono text-purple-400 uppercase font-semibold">
-                        MERN ERP System
-                    </span>
+                    <img src={logo} alt="Logo" className="h-24 mx-auto mb-4 object-contain" />
                     <h2 className="text-3xl font-extrabold text-white mt-2 leading-tight">
                         Welcome Back
                     </h2>
@@ -91,10 +90,7 @@ const Login = () => {
                     </Button>
                 </form>
 
-                <div className="mt-8 pt-6 border-t border-slate-800/80 text-center text-xs text-slate-500 font-mono">
-                    <p>Demo Admin: admin@gmail.com / 123456</p>
-                    <p className="mt-1">Demo Cashier: cashier@gmail.com / 123456</p>
-                </div>
+                {/* Credentials footer removed */}
             </div>
         </div>
     );

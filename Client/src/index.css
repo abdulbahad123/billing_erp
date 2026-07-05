@@ -1,14 +1,35 @@
 @import "tailwindcss";
 
+@theme {
+  /* Override purple color palette with the logo's red and yellow theme */
+  --color-purple-50: #fffbeb;
+  --color-purple-100: #fef3c7;
+  --color-purple-200: #fde68a;
+  --color-purple-300: #fcd34d;
+  --color-purple-400: #f2df07; /* Bright Yellow from Logo */
+  --color-purple-500: #ef4444; /* Red/Orange border/hover */
+  --color-purple-600: #d61c1c; /* Bright Red from Logo */
+  --color-purple-650: #d61c1c; /* Bright Red from Logo */
+  --color-purple-700: #b91c1c;
+  --color-purple-800: #991b1b;
+  --color-purple-900: #7f1d1d;
+  --color-purple-950: #1a0505;
+
+  /* Override indigo to blend with the red/yellow theme */
+  --color-indigo-450: #d61c1c;
+  --color-indigo-500: #d61c1c;
+  --color-indigo-600: #b91c1c;
+}
+
 @layer base {
   body {
     background-color: #0b0c10;
     color: #e3e8f0;
     font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
     min-height: 100vh;
-    background-image: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
-                      radial-gradient(at 50% 0%, rgba(139, 92, 246, 0.08) 0px, transparent 50%),
-                      radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.08) 0px, transparent 50%);
+    background-image: radial-gradient(at 0% 0%, rgba(214, 28, 28, 0.08) 0px, transparent 50%),
+                      radial-gradient(at 50% 0%, rgba(242, 223, 7, 0.06) 0px, transparent 50%),
+                      radial-gradient(at 100% 0%, rgba(214, 28, 28, 0.08) 0px, transparent 50%);
     background-attachment: fixed;
     overflow-x: hidden;
   }
@@ -40,8 +61,8 @@
 }
 
 .glass-input:focus {
-  border-color: #8b5cf6;
-  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.25);
+  border-color: #d61c1c;
+  box-shadow: 0 0 0 2px rgba(214, 28, 28, 0.25);
   outline: none;
 }
 
@@ -54,11 +75,11 @@
   background: rgba(15, 23, 42, 0.2);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(139, 92, 246, 0.25);
+  background: rgba(214, 28, 28, 0.25);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(139, 92, 246, 0.5);
+  background: rgba(242, 223, 7, 0.5);
 }
 
 /* Hide print layout by default in browser */
@@ -68,6 +89,10 @@
 
 /* Printing Media Layout */
 @media print {
+  @page {
+    margin: 0;
+  }
+
   /* Hide standard browser elements */
   nav,
   aside,
@@ -84,10 +109,11 @@
   body {
     background: #ffffff !important;
     color: #000000 !important;
-    font-family: 'Courier New', Courier, monospace, 'Times New Roman' !important;
-    font-size: 13px !important;
+    font-family: 'Inter', 'Outfit', system-ui, -apple-system, sans-serif !important;
     margin: 0 !important;
     padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   /* Unhide printable area */
@@ -98,31 +124,210 @@
     left: 0 !important;
     top: 0 !important;
     margin: 0 !important;
-    padding: 10px !important;
+    padding: 0 !important;
     color: #000000 !important;
     background: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
-  /* Clean table borders for paper receipt print out */
-  .print-table {
+  /* Print Bill Styles */
+  .print-bill-container {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    padding: 1.5cm !important;
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+
+  .bill-border-wrapper {
+    border: 1px solid #000000 !important;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .bill-header-top-row {
+    display: flex;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-bottom: none !important;
+    padding: 6px 8px 2px 8px !important;
+    text-align: center !important;
+  }
+
+  .bill-company-section {
+    position: relative !important;
+    text-align: center;
+    padding: 6px 10px 10px 10px !important;
+    border-bottom: 1px solid #000000 !important;
+  }
+
+  .company-logo-name-row {
+    position: relative !important;
+    display: block !important;
+    margin-bottom: 8px !important;
+  }
+
+  .company-logo {
+    position: absolute !important;
+    left: 15px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    height: 85px !important;
+    width: auto !important;
+    object-fit: contain;
+    margin: 0 !important;
+  }
+
+  .company-name-text {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .company-name-line1 {
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  .company-name-line2 {
+    font-size: 14px !important;
+    font-weight: bold !important;
+    margin: 2px 0;
+  }
+
+  .company-name-line3 {
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  .company-address {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    margin-top: 4px;
+  }
+
+  .company-gstin-pan {
+    font-size: 11px !important;
+    font-weight: bold !important;
+    margin-top: 2px;
+  }
+
+  /* Billing & Invoice Details 2-Column Section */
+  .bill-details-section {
+    display: flex;
+    border-bottom: 1px solid #000000 !important;
+  }
+
+  .billing-details-left {
+    flex: 1.2;
+    border-right: 1px solid #000000 !important;
+    padding: 8px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .invoice-details-right {
+    flex: 0.8;
+    padding: 8px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .details-title {
+    font-size: 13px !important;
+    font-weight: bold !important;
+    margin-bottom: 4px;
+    text-decoration: underline;
+  }
+
+  .details-row {
+    display: flex;
+    font-size: 11px !important;
+    line-height: 1.3;
+  }
+
+  .details-label {
+    font-weight: bold !important;
+    width: 110px;
+  }
+
+  .details-value {
+    flex: 1;
+  }
+
+  /* Table styling */
+  .bill-items-table {
     width: 100% !important;
     border-collapse: collapse !important;
-    margin-top: 10px !important;
   }
 
-  .print-table th,
-  .print-table td {
-    border: 1px solid #000000 !important;
-    padding: 6px 10px !important;
+  .bill-items-table th,
+  .bill-items-table td {
+    border-right: 1px solid #000000 !important;
+    border-bottom: none !important;
+    padding: 6px 8px !important;
+    font-size: 11px !important;
     color: #000000 !important;
-    font-size: 13px !important;
+    box-sizing: border-box;
   }
 
-  .print-table th {
-    background: #eaeaea !important;
+  .bill-items-table th:last-child,
+  .bill-items-table td:last-child {
+    border-right: none !important;
+  }
+
+  .bill-items-table th {
     font-weight: bold !important;
     text-align: center !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    background-color: rgba(0, 0, 0, 0.05) !important;
+    border-bottom: 1px solid #000000 !important;
+  }
+
+  .col-sr { width: 5%; text-align: center !important; }
+  .col-desc { width: 38%; text-align: left !important; }
+  .col-hsn { width: 10%; text-align: center !important; }
+  .col-qty { width: 8%; text-align: center !important; }
+  .col-unit { width: 8%; text-align: center !important; }
+  .col-price { width: 11%; text-align: right !important; }
+  .col-disc { width: 7%; text-align: center !important; }
+  .col-tax { width: 5%; text-align: center !important; }
+  .col-amount { width: 8%; text-align: right !important; }
+
+  .bill-items-table td:nth-child(1),
+  .bill-items-table td:nth-child(3),
+  .bill-items-table td:nth-child(4),
+  .bill-items-table td:nth-child(5),
+  .bill-items-table td:nth-child(7),
+  .bill-items-table td:nth-child(8) {
+    text-align: center !important;
+  }
+
+  .bill-items-table td:nth-child(2) {
+    text-align: left !important;
+  }
+
+  .bill-items-table td:nth-child(6),
+  .bill-items-table td:nth-child(9) {
+    text-align: right !important;
+  }
+
+  .bill-items-table tr.empty-row td {
+    height: 24px !important;
+    padding: 0 !important;
+  }
+
+  .bill-items-table tr.total-row td {
+    border-top: 1px solid #000000 !important;
+    border-bottom: none !important;
+    font-size: 12px !important;
   }
 }
