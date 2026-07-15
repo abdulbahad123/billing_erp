@@ -10,6 +10,7 @@ const createInvoice = async (req, res) => {
             customerPhone,
             items,
             discount,
+            tax,
             paymentMode,
         } = req.body;
 
@@ -73,9 +74,10 @@ const createInvoice = async (req, res) => {
             });
         }
 
-        // Apply discount
+        // Apply discount and tax
         const discAmt = discount || 0;
-        const total = Math.max(0, subTotal - discAmt);
+        const taxAmt = tax || 0;
+        const total = Math.max(0, subTotal - discAmt + taxAmt);
 
         // 3. Auto-save customer details
         let customer = await Customer.findOne({ phone: customerPhone.trim() });
@@ -94,6 +96,7 @@ const createInvoice = async (req, res) => {
             items: processedItems,
             subTotal,
             discount: discAmt,
+            tax: taxAmt,
             total,
             profit,
             paymentMode: paymentMode || "Cash",

@@ -35,6 +35,7 @@ const Billing = () => {
     // Bill summaries
     const [items, setItems] = useState([]);
     const [discount, setDiscount] = useState(0);
+    const [tax, setTax] = useState(0);
     const [paymentMode, setPaymentMode] = useState("Cash");
 
     // Auto-print status tracking
@@ -228,7 +229,7 @@ const Billing = () => {
 
     const calculateTotal = () => {
         const sub = calculateSubtotal();
-        return Math.max(0, sub - Number(discount));
+        return Math.max(0, sub - Number(discount) + Number(tax));
     };
 
     // Save and auto-download/print invoice
@@ -248,6 +249,7 @@ const Billing = () => {
             customerPhone: customerPhone.trim(),
             items,
             discount: Number(discount),
+            tax: Number(tax),
             paymentMode,
         };
 
@@ -266,6 +268,7 @@ const Billing = () => {
                     setCustomerName("");
                     setCustomerPhone("");
                     setDiscount(0);
+                    setTax(0);
                     setLastCreatedInvoice(null);
                     setIsPrinting(false);
                     navigate("/invoices");
@@ -565,6 +568,17 @@ const Billing = () => {
                                 />
                             </div>
 
+                            <div className="flex items-center justify-between gap-4">
+                                <span>{t("tax")}</span>
+                                <input
+                                    type="number"
+                                    value={tax}
+                                    onChange={(e) => setTax(e.target.value)}
+                                    placeholder="0"
+                                    className="glass-input px-3 py-1.5 rounded-lg text-right text-slate-100 w-24 text-xs focus:outline-none font-mono"
+                                />
+                            </div>
+
                             <div className="flex justify-between pt-3 border-t border-slate-800 text-lg font-bold text-slate-200">
                                 <span>{t("grandTotal")}</span>
                                 <span className="text-purple-400 font-mono">
@@ -676,12 +690,8 @@ const Billing = () => {
                                 <tr>
                                     <th className="col-sr">Sr.</th>
                                     <th className="col-desc">Item Description</th>
-                                    <th className="col-hsn">HSN/SAC</th>
                                     <th className="col-qty">Qty</th>
                                     <th className="col-unit">Unit</th>
-                                    <th className="col-price">List Price</th>
-                                    <th className="col-disc">Disc.</th>
-                                    <th className="col-tax">Tax %</th>
                                     <th className="col-amount">Amount (₹)</th>
                                 </tr>
                             </thead>
@@ -690,12 +700,8 @@ const Billing = () => {
                                     <tr key={index}>
                                         <td className="text-center">{index + 1}</td>
                                         <td className="text-left font-bold uppercase">{item.name}</td>
-                                        <td className="text-center">{item.hsn || ""}</td>
                                         <td className="text-center">{Number(item.qty).toFixed(2)}</td>
                                         <td className="text-center">{item.unit || "Pcs."}</td>
-                                        <td className="text-right">{Number(item.salesPrice).toFixed(2)}</td>
-                                        <td className="text-center">{item.discount || ""}</td>
-                                        <td className="text-center">{item.tax || ""}</td>
                                         <td className="text-right font-bold">{Number(item.amount).toFixed(2)}</td>
                                     </tr>
                                 ))}
@@ -708,15 +714,40 @@ const Billing = () => {
                                             <td>&nbsp;</td>
                                             <td>&nbsp;</td>
                                             <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
                                         </tr>
                                     ))}
+                                {/* Filler row to stretch the table to full page height */}
+                                <tr className="filler-row">
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                {/* Subtotal Row */}
+                                {(lastCreatedInvoice.discount > 0 || lastCreatedInvoice.tax > 0) && (
+                                    <tr className="subtotal-row">
+                                        <td colSpan="4" className="text-right font-semibold">Subtotal</td>
+                                        <td className="text-right font-semibold">{Number(lastCreatedInvoice.subTotal).toFixed(2)}</td>
+                                    </tr>
+                                )}
+                                {/* Discount Row */}
+                                {lastCreatedInvoice.discount > 0 && (
+                                    <tr className="discount-row">
+                                        <td colSpan="4" className="text-right text-red-650">Discount (-)</td>
+                                        <td className="text-right text-red-650">-{Number(lastCreatedInvoice.discount).toFixed(2)}</td>
+                                    </tr>
+                                )}
+                                {/* Tax Row */}
+                                {lastCreatedInvoice.tax > 0 && (
+                                    <tr className="tax-row">
+                                        <td colSpan="4" className="text-right">Tax (+)</td>
+                                        <td className="text-right font-bold">{Number(lastCreatedInvoice.tax).toFixed(2)}</td>
+                                    </tr>
+                                )}
                                 {/* Total Row */}
                                 <tr className="total-row">
-                                    <td colSpan="8" className="text-right font-bold">Total</td>
+                                    <td colSpan="4" className="text-right font-bold">Total</td>
                                     <td className="text-right font-bold">{Number(lastCreatedInvoice.total).toFixed(2)}</td>
                                 </tr>
                             </tbody>

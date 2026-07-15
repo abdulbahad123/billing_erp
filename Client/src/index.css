@@ -135,15 +135,19 @@
   .print-bill-container {
     background-color: #ffffff !important;
     color: #000000 !important;
-    padding: 1.5cm !important;
-    min-height: 100vh;
+    padding: 0 !important;
+    height: 100vh;
     box-sizing: border-box;
+    overflow: hidden;
   }
 
   .bill-border-wrapper {
     border: 1px solid #000000 !important;
     width: 100%;
+    height: calc(100vh - 2px);
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
   }
 
   .bill-header-top-row {
@@ -268,6 +272,11 @@
   .bill-items-table {
     width: 100% !important;
     border-collapse: collapse !important;
+    flex: 1;
+  }
+
+  .bill-items-table tbody {
+    height: 100%;
   }
 
   .bill-items-table th,
@@ -293,21 +302,14 @@
   }
 
   .col-sr { width: 5%; text-align: center !important; }
-  .col-desc { width: 38%; text-align: left !important; }
-  .col-hsn { width: 10%; text-align: center !important; }
-  .col-qty { width: 8%; text-align: center !important; }
-  .col-unit { width: 8%; text-align: center !important; }
-  .col-price { width: 11%; text-align: right !important; }
-  .col-disc { width: 7%; text-align: center !important; }
-  .col-tax { width: 5%; text-align: center !important; }
-  .col-amount { width: 8%; text-align: right !important; }
+  .col-desc { width: 60%; text-align: left !important; }
+  .col-qty { width: 10%; text-align: center !important; }
+  .col-unit { width: 10%; text-align: center !important; }
+  .col-amount { width: 15%; text-align: right !important; }
 
   .bill-items-table td:nth-child(1),
   .bill-items-table td:nth-child(3),
-  .bill-items-table td:nth-child(4),
-  .bill-items-table td:nth-child(5),
-  .bill-items-table td:nth-child(7),
-  .bill-items-table td:nth-child(8) {
+  .bill-items-table td:nth-child(4) {
     text-align: center !important;
   }
 
@@ -315,8 +317,7 @@
     text-align: left !important;
   }
 
-  .bill-items-table td:nth-child(6),
-  .bill-items-table td:nth-child(9) {
+  .bill-items-table td:nth-child(5) {
     text-align: right !important;
   }
 
@@ -325,9 +326,32 @@
     padding: 0 !important;
   }
 
+  .bill-items-table tr.filler-row {
+    height: 100%;
+  }
+
+  .bill-items-table tr.filler-row td {
+    height: auto !important;
+    padding: 0 !important;
+    border-bottom: none !important;
+  }
+
+  .bill-items-table tr.subtotal-row td {
+    border-top: 1px solid #000000 !important;
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+  }
+
+  .bill-items-table tr.discount-row td,
+  .bill-items-table tr.tax-row td {
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+  }
+
   .bill-items-table tr.total-row td {
     border-top: 1px solid #000000 !important;
     border-bottom: none !important;
     font-size: 12px !important;
+    padding: 6px 8px !important;
   }
 }

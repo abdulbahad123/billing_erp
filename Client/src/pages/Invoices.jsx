@@ -71,7 +71,8 @@ const Invoices = () => {
             `-----------------------------------------\n` +
             `*விவரங்கள் (Particulars):*\n${itemsText}` +
             `-----------------------------------------\n` +
-            `*தள்ளுபடி (Discount):* Rs. ${inv.discount}\n` +
+            (inv.discount > 0 ? `*தள்ளுபடி (Discount):* Rs. ${inv.discount}\n` : "") +
+            (inv.tax > 0 ? `*வரி (Tax):* Rs. ${inv.tax}\n` : "") +
             `*மொத்தம் (TOTAL):* Rs. ${inv.total}\n` +
             `-----------------------------------------\n` +
             `நன்றி! (Thank you!)\n` +
@@ -309,6 +310,14 @@ const Invoices = () => {
                                             - Rs. {selectedInvoice.discount.toLocaleString()}
                                         </span>
                                     </div>
+                                    {selectedInvoice.tax > 0 && (
+                                        <div className="flex justify-between text-slate-300">
+                                            <span>{t("tax")}</span>
+                                            <span className="font-bold font-mono">
+                                                + Rs. {selectedInvoice.tax.toLocaleString()}
+                                            </span>
+                                        </div>
+                                    )}
                                     <div className="flex justify-between text-base font-bold text-slate-100 border-t border-slate-800 pt-2">
                                         <span>{language === "ta" ? "மொத்தம்" : "Grand Total"}</span>
                                         <span className="text-purple-400 font-mono">
@@ -403,12 +412,8 @@ const Invoices = () => {
                                 <tr>
                                     <th className="col-sr">Sr.</th>
                                     <th className="col-desc">Item Description</th>
-                                    <th className="col-hsn">HSN/SAC</th>
                                     <th className="col-qty">Qty</th>
                                     <th className="col-unit">Unit</th>
-                                    <th className="col-price">List Price</th>
-                                    <th className="col-disc">Disc.</th>
-                                    <th className="col-tax">Tax %</th>
                                     <th className="col-amount">Amount (₹)</th>
                                 </tr>
                             </thead>
@@ -417,12 +422,8 @@ const Invoices = () => {
                                     <tr key={index}>
                                         <td className="text-center">{index + 1}</td>
                                         <td className="text-left font-bold uppercase">{item.name}</td>
-                                        <td className="text-center">{item.hsn || ""}</td>
                                         <td className="text-center">{Number(item.qty).toFixed(2)}</td>
                                         <td className="text-center">{item.unit || "Pcs."}</td>
-                                        <td className="text-right">{Number(item.salesPrice).toFixed(2)}</td>
-                                        <td className="text-center">{item.discount || ""}</td>
-                                        <td className="text-center">{item.tax || ""}</td>
                                         <td className="text-right font-bold">{Number(item.amount).toFixed(2)}</td>
                                     </tr>
                                 ))}
@@ -435,15 +436,40 @@ const Invoices = () => {
                                             <td>&nbsp;</td>
                                             <td>&nbsp;</td>
                                             <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
                                         </tr>
                                     ))}
+                                {/* Filler row to stretch the table to full page height */}
+                                <tr className="filler-row">
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                {/* Subtotal Row */}
+                                {(selectedInvoice.discount > 0 || selectedInvoice.tax > 0) && (
+                                    <tr className="subtotal-row">
+                                        <td colSpan="4" className="text-right font-semibold">Subtotal</td>
+                                        <td className="text-right font-semibold">{Number(selectedInvoice.subTotal).toFixed(2)}</td>
+                                    </tr>
+                                )}
+                                {/* Discount Row */}
+                                {selectedInvoice.discount > 0 && (
+                                    <tr className="discount-row">
+                                        <td colSpan="4" className="text-right text-red-650">Discount (-)</td>
+                                        <td className="text-right text-red-650">-{Number(selectedInvoice.discount).toFixed(2)}</td>
+                                    </tr>
+                                )}
+                                {/* Tax Row */}
+                                {selectedInvoice.tax > 0 && (
+                                    <tr className="tax-row">
+                                        <td colSpan="4" className="text-right">Tax (+)</td>
+                                        <td className="text-right font-bold">{Number(selectedInvoice.tax).toFixed(2)}</td>
+                                    </tr>
+                                )}
                                 {/* Total Row */}
                                 <tr className="total-row">
-                                    <td colSpan="8" className="text-right font-bold">Total</td>
+                                    <td colSpan="4" className="text-right font-bold">Total</td>
                                     <td className="text-right font-bold">{Number(selectedInvoice.total).toFixed(2)}</td>
                                 </tr>
                             </tbody>
